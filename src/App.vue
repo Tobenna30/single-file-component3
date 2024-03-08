@@ -17,9 +17,13 @@ import TheWelcome from './components/TheWelcome.vue'
 
     <header>
       <h2>{{sitename}}</h2>
-    <button @click="showCheckout">Checkout</button>
+    <button @click="showCheckout">  {{itemsInTheCart}}
+      <font-awesome-icon :icon="['fas', 'fa-shopping-cart']" />
+      Cart
+    </button>
   </header>
 
+  
     <!-- <main>
       <TheWelcome />
     </main> -->
@@ -50,8 +54,14 @@ export default {
     showCheckout() { // Corrected the method name to match the button's @click directive
       this.currentView = this.currentView === productList ? checkout : productList;
     }
-  }
+  },
+  computed: {
+      
+      itemsInTheCart: function () {
+        return this.cart.length || "";
+      },
 }
+};
 </script>
 
 
