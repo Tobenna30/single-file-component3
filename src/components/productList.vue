@@ -8,7 +8,17 @@
         <p>Location: {{ lesson.location }}</p>
         <p>Price: ${{ lesson.price }}</p>
         <p>Spaces: {{ lesson.spaces }}</p>
-        <button @click="addToCart(lesson)" :disabled="lesson.spaces === 0">Add to Cart</button>
+        <button 
+      @click="addToCart(lesson)" 
+      :disabled="!canAddToCart(lesson)">
+      Add to Cart
+    </button>
+    <span v-if="!canAddToCart(lesson)">All out!</span>
+    <span v-else-if="itemsLeft(lesson) < 5 && itemsLeft(lesson) > 0">
+      Only {{ itemsLeft(lesson) }} left!
+    </span>
+    <span v-else>Buy now!</span>
+
       </div>
     </div>
   </div>
@@ -16,7 +26,7 @@
 
 <script>
 export default {
-  props: ['lessons'],
+  props: ['lessons', 'cart'],
   computed: {
     filteredLessons() {
       // Check if searchTerm is not empty
@@ -44,7 +54,27 @@ export default {
           icon: lesson.icon,
         });
       }
-    }
+    },
+    canAddToCart: function (lesson) {
+           
+           return lesson.spaces > this.cartCount(lesson.id);
+         },
+         cartCount(id) {
+          let count = 0;
+          for (let i = 0; i < this.cart.length; i++) {
+              if (this.cart[i] === id) {
+                  count++;
+              }
+
+          }
+          return count;
+      },
+  itemsLeft(lesson) {
+        
+        return lesson.spaces - this.cartCount(lesson.id);
+        
+      },
+
   }
 }
 </script>
