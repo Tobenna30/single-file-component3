@@ -1,0 +1,101 @@
+[{
+  "_id": {
+    "$oid": "65b0aecb15dcb58f0cbf4269"
+  },
+  "id": 1,
+  "subject": "Science",
+  "location": "Lab B",
+  "price": 25,
+  "spaces": 5,
+  "icon": "fa-flask"
+},{
+  "_id": {
+    "$oid": "65b0aecb15dcb58f0cbf426a"
+  },
+  "id": 2,
+  "subject": "History",
+  "location": "Room C",
+  "price": 15,
+  "spaces": 5,
+  "icon": "fa-book"
+},{
+  "_id": {
+    "$oid": "65b0aecb15dcb58f0cbf426b"
+  },
+  "id": 3,
+  "subject": "Literature",
+  "location": "Room D",
+  "price": 18,
+  "spaces": 5,
+  "icon": "fa-book-open"
+},{
+  "_id": {
+    "$oid": "65b0aecb15dcb58f0cbf426c"
+  },
+  "id": 4,
+  "subject": "Art",
+  "location": "Studio A",
+  "price": 30,
+  "spaces": 5,
+  "icon": "fa-paint-brush"
+},{
+  "_id": {
+    "$oid": "65b0aecb15dcb58f0cbf426d"
+  },
+  "id": 5,
+  "subject": "Music",
+  "location": "Studio B",
+  "price": 22,
+  "spaces": 5,
+  "icon": "fa-music"
+},{
+  "_id": {
+    "$oid": "65b0aecb15dcb58f0cbf426e"
+  },
+  "id": 6,
+  "subject": "Physical Education",
+  "location": "Field",
+  "price": 17,
+  "spaces": 5,
+  "icon": "fa-running"
+},{
+  "_id": {
+    "$oid": "65b0aecb15dcb58f0cbf426f"
+  },
+  "id": 7,
+  "subject": "Computer Science",
+  "location": "Lab C",
+  "price": 28,
+  "spaces": 5,
+  "icon": "fa-laptop-code"
+},{
+  "_id": {
+    "$oid": "65b0aecb15dcb58f0cbf4270"
+  },
+  "id": 8,
+  "subject": "Biology",
+  "location": "Lab D",
+  "price": 26,
+  "spaces": 5,
+  "icon": "fa-microscope"
+},{
+  "_id": {
+    "$oid": "65b0aecb15dcb58f0cbf4271"
+  },
+  "id": 9,
+  "subject": "Film",
+  "location": "Theatre A",
+  "price": 45,
+  "spaces": 5,
+  "icon": "fa-film"
+},{
+  "_id": {
+    "$oid": "65b313e4c57d288db8151fe7"
+  },
+  "id": 10,
+  "subject": "Math",
+  "location": "Room A",
+  "price": 20,
+  "spaces": 5,
+  "icon": "fa-calculator"
+}]

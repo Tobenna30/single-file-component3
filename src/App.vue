@@ -1,19 +1,8 @@
-<!-- <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script> -->
-
 
 
 <template>
   <div id="app">
-    <!-- <header>
-      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-      <div class="wrapper">
-        <HelloWorld msg="You did it!" />
-      </div>
-    </header> -->
+    
 
     <header>
       <h2>{{sitename}}</h2>
@@ -57,17 +46,34 @@ import TheWelcome from './components/TheWelcome.vue'
 
   
     <!-- <main>
-      <TheWelcome />
+      <component :is="currentView" 
+      
+      :sortedLessons="sortedLessons"
+      
+      :cart="cart"
+      @add-item-to-cart="addToCart"
+      >
+    </component>
     </main> -->
+
     <main>
-      <component :is="currentView"></component>
+      <component :is="currentView" 
+  :lessons="lessons" 
+  :cart="cart"
+  @add-item-to-cart="addToCart">
+</component>
+
+
     </main>
   </div>
 </template>
 
 <script>
 import productList from './components/productList.vue'
-import checkout from './components/checkout.vue'
+import checkout from './components/checkout.vue';
+
+import lessons from './assets/json/lessons.json'
+
 
 export default {
   name: 'lesson-app',
@@ -76,9 +82,15 @@ export default {
       sitename: 'Individual Demonstration Booking System',
       cart: [],
       currentView: productList,
+       lessons: lessons ,
+      // lessons: [],
+      serverURL: "https://lesseonapp3-env.eba-mwhmmtep.eu-west-2.elasticbeanstalk.com/collections/lessons",
+
       testConsole: true,
       showTestConsole: true,
-      serverURL: "https://lesseonapp3-env.eba-mwhmmtep.eu-west-2.elasticbeanstalk.com/collections/lessons",
+      searchTerm: '',
+      // sortedLessons: this.lessons,
+      
     }
   },
   components: {
@@ -86,11 +98,15 @@ export default {
     checkout
   },
   methods: {
+    
     showCheckout() { // Corrected the method name to match the button's @click directive
       this.currentView = this.currentView === productList ? checkout : productList;
     },
     toggleShowTestConsole() {
         this.showTestConsole = !this.showTestConsole; // This will toggle the value between true and false
+      },
+      toggleShowProduct(){
+          this.showProduct = this.showProduct ? false : true;
       },
       unregisterAllServiceWorkers() {
       navigator.serviceWorker.getRegistrations().then(function (registrations) {
@@ -170,6 +186,32 @@ export default {
       itemsInTheCart: function () {
         return this.cart.length || "";
       },
+
+      sortedLessons() {
+  return this.lessons.slice().sort((a, b) => {
+    if (
+      (this.sortBy === 'subject' || this.sortBy === 'location') &&
+      a[this.sortBy] &&
+      b[this.sortBy]
+    ) {
+      const nameA = a[this.sortBy].toUpperCase();
+      const nameB = b[this.sortBy].toUpperCase();
+      if (this.sortOrder === 'asc') {
+        return nameA.localeCompare(nameB);
+      } else {
+        return nameB.localeCompare(nameA);
+      }
+    } else if (a[this.sortBy] && !b[this.sortBy]) {
+      return -1;
+    } else if (!a[this.sortBy] && b[this.sortBy]) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+},
+  
+      
 }
 };
 </script>
