@@ -6,11 +6,10 @@
 
     <header>
       <h2>{{sitename}}</h2>
-    <button @click="showCheckout">  {{itemsInTheCart}}
-      <font-awesome-icon :icon="['fas', 'fa-shopping-cart']" />
-      Cart
-    </button>
-    
+      <button @click="showCheckout">Cart ({{ itemsInTheCart }})
+  <font-awesome-icon :icon="['fas', 'fa-shopping-cart']"></font-awesome-icon>
+</button>
+
     <button v-if="testConsole" @click="toggleShowTestConsole">
       <font-awesome-icon :icon="['fas', 'fa-text-height']" />
       Test Console
@@ -72,7 +71,7 @@
 import productList from './components/productList.vue'
 import checkout from './components/checkout.vue';
 
-import lessons from './assets/json/lessons.json'
+// import lessons from './assets/json/lessons.json'
 
 
 export default {
@@ -82,8 +81,8 @@ export default {
       sitename: 'Individual Demonstration Booking System',
       cart: [],
       currentView: productList,
-       lessons: lessons ,
-      // lessons: [],
+      //  lessons: lessons ,
+      lessons: [],
       serverURL: "https://lesseonapp3-env.eba-mwhmmtep.eu-west-2.elasticbeanstalk.com/collections/lessons",
 
       testConsole: true,
@@ -97,6 +96,38 @@ export default {
     productList,
     checkout
   },
+
+  created: function () {
+    // fetch("http://localhost:3000/collections/lessons").then(
+    //   function (response) {
+    //     response.text().then(
+    //       function (text) {
+    //         alert(text);
+    //       }
+    //     )
+    //   }
+    // )
+
+  //   if ("serviceWorker" in navigator) {
+  //     navigator.serviceWorker.register("service-worker.js");
+  //  }
+
+  let webstore = this;
+    //  fetch that retrieves all the lessons with GET
+    // fetch("http://localhost:3000/collections/lessons").then(
+    fetch("https://lesseonapp3-env.eba-mwhmmtep.eu-west-2.elasticbeanstalk.com/collections/lessons").then(  
+      function (response) {
+        response.json().then(
+          function (json) {
+            // alert(json);
+            // console.log(json);
+            webstore.lessons = json;
+          }
+        )
+      }
+    )
+  },
+
   methods: {
     
     showCheckout() { // Corrected the method name to match the button's @click directive
@@ -127,21 +158,23 @@ export default {
       window.location.reload();
     },
     addToCart(lesson) {
-      if (lesson.spaces > 0) {
-        // Decrease the lesson space
-        lesson.spaces--;
-
-        // Add the lesson to the cart
-        this.cart.push({
-          id: lesson.id,
-          subject: lesson.subject,
-          location: lesson.location,
-          price: lesson.price,
-          icon: lesson.icon,
-        });
-        eventBus.$emit('item-added', this.cart);
-      }
-    },
+  console.log('Before adding, cart length:', this.cart.length);
+  try {
+    // Assuming lesson.spaces is a valid property and greater than 0
+    lesson.spaces--;
+    this.cart.push({
+      id: lesson.id,
+      subject: lesson.subject,
+      location: lesson.location,
+      price: lesson.price,
+      icon: lesson.icon,
+    });
+    console.log('After adding, cart length:', this.cart.length);
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+  }
+}
+,
     saveProductToDB() {
       const newProduct = {
         "id": 1,
@@ -182,10 +215,10 @@ export default {
 
   },
   computed: {
-      
-      itemsInTheCart: function () {
-        return this.cart.length || "";
-      },
+      // Your computed properties, if any
+    itemsInTheCart() {
+      return this.cart.length;
+    },
 
       sortedLessons() {
   return this.lessons.slice().sort((a, b) => {
