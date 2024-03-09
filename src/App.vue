@@ -59,7 +59,8 @@
       <component :is="currentView" 
   :lessons="lessons" 
   :cart="cart"
-  @add-item-to-cart="addToCart">
+  @add-item-to-cart="addToCart"
+  @remove-item="removeFromCart">
 </component>
 
 
@@ -108,9 +109,9 @@ export default {
     //   }
     // )
 
-  //   if ("serviceWorker" in navigator) {
-  //     navigator.serviceWorker.register("service-worker.js");
-  //  }
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+   }
 
   let webstore = this;
     //  fetch that retrieves all the lessons with GET
@@ -173,8 +174,13 @@ export default {
   } catch (error) {
     console.error('Error adding to cart:', error);
   }
-}
-,
+},
+removeFromCart(itemId) {
+    const index = this.cart.findIndex(item => item.id === itemId);
+    if (index !== -1) {
+      this.cart.splice(index, 1);
+    }
+  },
     saveProductToDB() {
       const newProduct = {
         "id": 1,
