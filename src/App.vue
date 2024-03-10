@@ -44,23 +44,14 @@
   </header>
 
   
-    <!-- <main>
-      <component :is="currentView" 
-      
-      :sortedLessons="sortedLessons"
-      
-      :cart="cart"
-      @add-item-to-cart="addToCart"
-      >
-    </component>
-    </main> -->
+  
 
     <main>
       <component :is="currentView" 
   :lessons="lessons" 
   :cart="cart"
   @add-item-to-cart="addToCart"
-  @remove-item="removeFromCart">
+  @remove-item-from-cart="removeLessonFromCart">
 </component>
 
 
@@ -89,7 +80,7 @@ export default {
       testConsole: true,
       showTestConsole: true,
       searchTerm: '',
-      // sortedLessons: this.lessons,
+      
       
     }
   },
@@ -131,11 +122,11 @@ export default {
 
   methods: {
     
-    showCheckout() { // Corrected the method name to match the button's @click directive
+    showCheckout() { 
       this.currentView = this.currentView === productList ? checkout : productList;
     },
     toggleShowTestConsole() {
-        this.showTestConsole = !this.showTestConsole; // This will toggle the value between true and false
+        this.showTestConsole = !this.showTestConsole; 
       },
       toggleShowProduct(){
           this.showProduct = this.showProduct ? false : true;
@@ -161,7 +152,7 @@ export default {
     addToCart(lesson) {
   console.log('Before adding, cart length:', this.cart.length);
   try {
-    // Assuming lesson.spaces is a valid property and greater than 0
+   
     lesson.spaces--;
     this.cart.push({
       id: lesson.id,
@@ -175,9 +166,14 @@ export default {
     console.error('Error adding to cart:', error);
   }
 },
-removeFromCart(itemId) {
+removeLessonFromCart(itemId) {
     const index = this.cart.findIndex(item => item.id === itemId);
     if (index !== -1) {
+      
+      const lesson = this.lessons.find(lesson => lesson.id === this.cart[index].id);
+      if (lesson) lesson.spaces++;
+      
+      
       this.cart.splice(index, 1);
     }
   },
@@ -221,7 +217,7 @@ removeFromCart(itemId) {
 
   },
   computed: {
-      // Your computed properties, if any
+      
     itemsInTheCart() {
       return this.cart.length;
     },
