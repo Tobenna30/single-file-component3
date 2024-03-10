@@ -1,3 +1,20 @@
+the link to GitHub Repository: https://github.com/Tobenna30/single-file-component3
+
+the link to GitHub Pages from where the app can directly run: https://tobenna30.github.io/single-file-component3/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # header-vue-project
 
 This template should help get you started developing with Vue 3 in Vite.
